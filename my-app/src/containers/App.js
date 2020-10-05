@@ -94,6 +94,23 @@ import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    console.log("App.js Constructor");
+
+    //! Another way to initialize the state
+    // this.state = {
+    //   persons: [
+    //     { name: "Max", age: 28, id: "001" },
+    //     { name: "Manu", age: 29, id: "002" },
+    //     { name: "Stephanie", age: 26, id: "003" },
+    //   ],
+    //   otherState: "some other value",
+    //   showPersons: false,
+    // }
+  }
+
   state = {
     persons: [
       { name: "Max", age: 28, id: "001" },
@@ -103,6 +120,14 @@ class App extends Component {
     otherState: "some other value",
     showPersons: false,
   };
+
+  static getDerivedStateFromProps(props, state) {
+    console.log("App.js getDerivedStateFromProps", props);
+    return state;
+  }
+  componentDidMount() {
+    console.log("App.js ComponentDidMount");
+  }
 
   nameChangedHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex((p) => {
@@ -130,6 +155,7 @@ class App extends Component {
   };
 
   render() {
+    console.log("App.js render");
     // const style = {
     //   backgroundColor: "green",
     //   color: "white",
@@ -156,7 +182,7 @@ class App extends Component {
     return (
       <div className="App">
         <Cockpit
-          persons={this.state.persons}
+          personsLength={this.state.persons.length}
           showPersons={this.state.showPersons}
           clicked={this.togglePersonsHandler}
         />
