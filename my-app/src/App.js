@@ -87,9 +87,25 @@
 // export default app;
 
 //! Class-based component
+
 import React, { Component } from "react";
+import styled from "styled-components";
 import "./App.css";
 import Person from "./Person/Person";
+import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
+
+const StyledButton = styled.button`
+  background-color: ${(props) => (props.alter ? "red" : "green")};
+  color: white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+  &:hover {
+    background-color: ${(props) => (props.alter ? "salmon" : "lightgreen")};
+    color: black;
+  }
+`;
 
 class App extends Component {
   state = {
@@ -129,7 +145,8 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: "white",
+      backgroundColor: "green",
+      color: "white",
       font: "inherit",
       border: "1px solid blue",
       padding: "8px",
@@ -142,25 +159,42 @@ class App extends Component {
         <div>
           {this.state.persons.map((person, index) => {
             return (
-              <Person
-                name={person.name}
-                age={person.age}
-                key={person.id}
-                click={() => this.deletePersonHandler(index)}
-                changed={(event) => this.nameChangedHandler(event, person.id)}
-              ></Person>
+              // Key always should be on the outer element/component
+              <ErrorBoundary key={person.id}>
+                <Person
+                  name={person.name}
+                  age={person.age}
+                  click={() => this.deletePersonHandler(index)}
+                  changed={(event) => this.nameChangedHandler(event, person.id)}
+                >
+                  This is the CHILD
+                </Person>
+              </ErrorBoundary>
             );
           })}
         </div>
       );
+      // style.backgroundColor = "red";
     }
+
+    const cssClasses = [];
+    if (this.state.persons.length <= 2) {
+      cssClasses.push("red");
+    }
+    if (this.state.persons.length <= 1) {
+      cssClasses.push("bold");
+    }
+
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
-        <p>This is really working!</p>
-        <button style={style} onClick={this.togglePersonsHandler}>
+        <p className={cssClasses.join(" ")}>This is really working!</p>
+        <StyledButton
+          alter={this.state.showPersons}
+          onClick={this.togglePersonsHandler}
+        >
           Toggle Persons
-        </button>
+        </StyledButton>
         {persons}
       </div>
     );
