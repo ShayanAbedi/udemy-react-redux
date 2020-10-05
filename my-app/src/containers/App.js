@@ -89,23 +89,9 @@
 //! Class-based component
 
 import React, { Component } from "react";
-import styled from "styled-components";
 import "./App.css";
-import Person from "./Person/Person";
-import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
-
-const StyledButton = styled.button`
-  background-color: ${(props) => (props.alter ? "red" : "green")};
-  color: white;
-  font: inherit;
-  border: 1px solid blue;
-  padding: 8px;
-  cursor: pointer;
-  &:hover {
-    background-color: ${(props) => (props.alter ? "salmon" : "lightgreen")};
-    color: black;
-  }
-`;
+import Persons from "../components/Persons/Persons";
+import Cockpit from "../components/Cockpit/Cockpit";
 
 class App extends Component {
   state = {
@@ -144,61 +130,39 @@ class App extends Component {
   };
 
   render() {
-    const style = {
-      backgroundColor: "green",
-      color: "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer",
-    };
+    // const style = {
+    //   backgroundColor: "green",
+    //   color: "white",
+    //   font: "inherit",
+    //   border: "1px solid blue",
+    //   padding: "8px",
+    //   cursor: "pointer",
+    // };
 
     let persons = null;
     if (this.state.showPersons) {
       persons = (
         <div>
-          {this.state.persons.map((person, index) => {
-            return (
-              // Key always should be on the outer element/component
-              <ErrorBoundary key={person.id}>
-                <Person
-                  name={person.name}
-                  age={person.age}
-                  click={() => this.deletePersonHandler(index)}
-                  changed={(event) => this.nameChangedHandler(event, person.id)}
-                >
-                  This is the CHILD
-                </Person>
-              </ErrorBoundary>
-            );
-          })}
+          <Persons
+            persons={this.state.persons}
+            clicked={this.deletePersonHandler}
+            changed={this.nameChangedHandler}
+          />
         </div>
       );
       // style.backgroundColor = "red";
     }
 
-    const cssClasses = [];
-    if (this.state.persons.length <= 2) {
-      cssClasses.push("red");
-    }
-    if (this.state.persons.length <= 1) {
-      cssClasses.push("bold");
-    }
-
     return (
       <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <p className={cssClasses.join(" ")}>This is really working!</p>
-        <StyledButton
-          alter={this.state.showPersons}
-          onClick={this.togglePersonsHandler}
-        >
-          Toggle Persons
-        </StyledButton>
+        <Cockpit
+          persons={this.state.persons}
+          showPersons={this.state.showPersons}
+          clicked={this.togglePersonsHandler}
+        />
         {persons}
       </div>
     );
-    // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
