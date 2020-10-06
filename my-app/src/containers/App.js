@@ -92,6 +92,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
+import AuthContext from "../context/auth-context";
 
 class App extends Component {
   constructor(props) {
@@ -181,12 +182,19 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Cockpit
-          personsLength={this.state.persons.length}
-          showPersons={this.state.showPersons}
-          clicked={this.togglePersonsHandler}
-        />
-        {persons}
+        <AuthContext.Provider
+          value={{
+            authenticated: this.state.authenticated,
+            login: this.loginHandler,
+          }}
+        >
+          <Cockpit
+            personsLength={this.state.persons.length}
+            showPersons={this.state.showPersons}
+            clicked={this.togglePersonsHandler}
+          />
+          {persons}
+        </AuthContext.Provider>
       </div>
     );
   }

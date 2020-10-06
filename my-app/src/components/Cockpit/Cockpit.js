@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import "./Cockpit.css";
+import AuthContext from "../../context/auth-context";
 
 const StyledButton = styled.button`
   background-color: ${(props) => (props.alter ? "red" : "green")};
@@ -16,6 +17,8 @@ const StyledButton = styled.button`
 `;
 
 const cockpit = (props) => {
+  const authContext = useContext(AuthContext);
+
   useEffect(() => {
     console.log("CockPit.js useEffect");
   }, []);
