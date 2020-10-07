@@ -6,7 +6,7 @@
   cursor: pointer;
   font: inherit;
   padding: 10px;
-  margin: 10px;
+  margin: 5px;
   font-weight: bold;
 }
 
@@ -16,9 +16,9 @@
 }
 
 .Success {
-  color: #5c9210;
+  color: green;
 }
 
 .Danger {
-  color: #944317;
+  color: red;
 }
