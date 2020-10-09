@@ -1,14 +1,15 @@
 import React from "react";
+import classes from "./NavItems.module.css";
+import NavItem from "../NavItem/NavItem";
 
 const NavItems = () => {
   return (
-    <div>
-      <ul>
-        <li>
-          <a href="">A Link</a>
-        </li>
-      </ul>
-    </div>
+    <ul className={classes.NavItems}>
+      <NavItem link="/" active>
+        Burger Builder
+      </NavItem>
+      <NavItem link="/">Checkout</NavItem>
+    </ul>
   );
 };
 
