@@ -11,7 +11,7 @@ const OrderSummary = (props) => {
       </li>
     );
   });
-  return (
+  return !props.complete ? (
     <Aux>
       <h3>Your Order</h3>
       <p>A delicious burger with the following ingredients: </p>
@@ -27,10 +27,15 @@ const OrderSummary = (props) => {
       >
         CANCEL
       </button>
-      <button className={`${classes.Button} ${classes.Success} `}>
+      <button
+        className={`${classes.Button} ${classes.Success} `}
+        onClick={props.continue}
+      >
         CONTINUE
       </button>
     </Aux>
+  ) : (
+    <p>Order Submitted!!</p>
   );
 };
 export default OrderSummary;
