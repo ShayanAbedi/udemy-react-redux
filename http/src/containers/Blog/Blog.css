@@ -17,6 +17,10 @@
 }
 
 .Blog a:hover,
-.Blog a:active {
-  color: rgb(252, 194, 47);
+.Blog a:active,
+.Blog a.active {
+  color: rgb(47, 85, 252);
+}
+.Blog a.home-active {
+  color: red;
 }

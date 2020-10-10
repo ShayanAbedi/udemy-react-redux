@@ -3,27 +3,28 @@ import axios from "axios";
 import "./FullPost.css";
 
 class FullPost extends Component {
+  id = this.props.match.params.id;
   state = {
     loadedPost: null,
   };
-  componentDidUpdate() {
-    if (this.props.id) {
+  componentDidMount() {
+    if (this.id) {
       if (
         !this.state.loadedPost ||
-        (this.state.loadedPost && this.state.loadedPost.id !== this.props.id)
+        (this.state.loadedPost && this.state.loadedPost.id !== this.id)
       ) {
-        axios.get(`/posts/${this.props.id}`).then((response) => {
+        axios.get(`/posts/${this.id}`).then((response) => {
           this.setState({ loadedPost: response.data });
         });
       }
     }
   }
   deletePost = () => {
-    axios.delete(`/posts/${this.props.id}`).then((res) => console.log(res));
+    axios.delete(`/posts/${this.id}`).then((res) => console.log(res));
   };
   render() {
     let post = <p style={{ textAlign: "center" }}>Please select a Post!</p>;
-    if (this.props.id) {
+    if (this.id) {
       post = <p style={{ textAlign: "center" }}>Loading...</p>;
     }
     if (this.state.loadedPost) {
